@@ -60,7 +60,24 @@ public class addEtudiant extends JFrame{
         GestionEtudiants ge = new GestionEtudiants();
         JScrollPane body = new JScrollPane(table);
         tm.setEtudiants(ge.listeDesEtudiants());
-        add(body, BorderLayout.CENTER);
+        
+        JPanel searchPanel = new JPanel();
+        JLabel searchLabel = new JLabel("recherche par mc:");
+        JTextField searchField = new JTextField(10);
+        JButton searchButton = new JButton("rechercher");
+        searchPanel.add(searchLabel);        
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+        JPanel bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.add(body, BorderLayout.CENTER);
+        bodyPanel.add(searchPanel, BorderLayout.NORTH);
+        add(bodyPanel, BorderLayout.CENTER);
+
+        searchButton.addActionListener(e -> {
+            String mc = searchField.getText();
+            tm.setEtudiants(ge.rechercherParMC(mc));
+        });
         
        
         
