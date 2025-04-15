@@ -114,11 +114,22 @@ public class addEtudiant extends JFrame{
 
         buttons.add(suppButton);
         suppButton.addActionListener(e -> {
-            String id = JOptionPane.showInputDialog("id de l'etudiant a supprimer");
+            /* 
+            
+            */
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                int id = (int) table.getValueAt(selectedRow, 0);
+                ge.supprimerEtudiant(id);
+                tm.setEtudiants(ge.listeDesEtudiants());
+            }
+            else{
+                String id = JOptionPane.showInputDialog("id de l'etudiant a supprimer");
             if (id != null) {
                 ge.supprimerEtudiant(Integer.parseInt(id));
             }
             tm.setEtudiants(ge.listeDesEtudiants());
+            }
         });
     }
 
