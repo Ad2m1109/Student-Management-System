@@ -1,6 +1,6 @@
-package modules;
-public  class etudiant {
-    protected static int idetudiant=0;
+package model;
+public class etudiant {
+    public static int idetudiant = 0;
     protected int id;
     protected String nom;
     protected String prenom;
@@ -11,14 +11,14 @@ public  class etudiant {
         this.prenom = prenom;
         this.filiere = filiere;
         this.sexe = sexe;
-        this.id=++idetudiant;
+        this.id = ++idetudiant;
     }
-    public etudiant(int id,String nom, String prenom, String filiere, String sexe) {
+    public etudiant(int id, String nom, String prenom, String filiere, String sexe) {
         this.nom = nom;
         this.prenom = prenom;
         this.filiere = filiere;
         this.sexe = sexe;
-        this.id=id;
+        this.id = id;
     }
     public int getId() {
         return id;
@@ -35,5 +35,4 @@ public  class etudiant {
     public String getSexe() {
         return sexe;
     }  
-
 }

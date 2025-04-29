@@ -1,4 +1,4 @@
-package modules;
+package model;
 import java.util.ArrayList;
 import java.util.List;
 public class GestionEtudiants implements IGestionEtudiants {
@@ -13,7 +13,7 @@ public class GestionEtudiants implements IGestionEtudiants {
         return e;
     }
 
-      @Override
+    @Override
     public List<etudiant> rechercherParMC(String mc) {
         List<etudiant> ls = new ArrayList<>();
         for (etudiant e : etudiants) {
@@ -33,9 +33,13 @@ public class GestionEtudiants implements IGestionEtudiants {
     public List<etudiant> listeDesEtudiants() {
         return etudiants;
     }
+    
     @Override
     public void supprimerEtudiant(int id) {
         etudiants.removeIf(e -> e.id == id);
     }
     
+    public void setEtudiants(List<etudiant> etudiants) {
+        this.etudiants = etudiants;
+    }
 }

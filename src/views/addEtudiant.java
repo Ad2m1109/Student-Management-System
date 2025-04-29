@@ -1,9 +1,10 @@
 package views;
+import dao.useDAO;
 import java.awt.*;
 import javax.swing.*;
-import modules.GestionEtudiants;
-import modules.etudiant;
-import modules.tableModele;
+import model.GestionEtudiants;
+import model.etudiant;
+import model.tableModele;
 public class addEtudiant extends JFrame{
     public addEtudiant() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +60,11 @@ public class addEtudiant extends JFrame{
         JTable table = new JTable(tm);
         GestionEtudiants ge = new GestionEtudiants();
         JScrollPane body = new JScrollPane(table);
+        
+        // Load users from database on startup
+        useDAO dao = new useDAO();
+        etudiant.idetudiant = dao.getLastId(); // Set the last used ID
+        ge.setEtudiants(dao.getAllUsers());
         tm.setEtudiants(ge.listeDesEtudiants());
         
         JPanel searchPanel = new JPanel();
@@ -102,6 +108,8 @@ public class addEtudiant extends JFrame{
             String sexe1 = r1.isSelected() ? "h" : "f";
             etudiant e1 = new etudiant(nom, prenom1, filiere, sexe1);
             ge.ajouterEtudiant(e1);
+            useDAO u=new useDAO();
+            u.adduser(e1);
             tm.setEtudiants(ge.listeDesEtudiants());
         });
 
@@ -114,21 +122,23 @@ public class addEtudiant extends JFrame{
 
         buttons.add(suppButton);
         suppButton.addActionListener(e -> {
-            /* 
-            
-            */
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
                 int id = (int) table.getValueAt(selectedRow, 0);
                 ge.supprimerEtudiant(id);
+                useDAO u = new useDAO();
+                u.deleteUser(id); // Delete from database
                 tm.setEtudiants(ge.listeDesEtudiants());
             }
-            else{
+            else {
                 String id = JOptionPane.showInputDialog("id de l'etudiant a supprimer");
-            if (id != null) {
-                ge.supprimerEtudiant(Integer.parseInt(id));
-            }
-            tm.setEtudiants(ge.listeDesEtudiants());
+                if (id != null) {
+                    int idNum = Integer.parseInt(id);
+                    ge.supprimerEtudiant(idNum);
+                    useDAO u = new useDAO();
+                    u.deleteUser(idNum); // Delete from database
+                    tm.setEtudiants(ge.listeDesEtudiants());
+                }
             }
         });
     }
